@@ -1,69 +1,88 @@
 package com.wojnarowicz.socket.data;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class FileData implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String destinationDirectory;
-	private String sourceDirectory;
-	private String fileName;
-	private long fileSize;
-	private byte[] fileData;
-	private String status;
+    private String destinationDirectory;
+    private String sourceDirectory;
+    private String fileName;
+    private long fileSize;
+    private byte[] fileData;
+    private String status;
 
-	public String getDestinationDirectory() {
-		return destinationDirectory;
-	}
+    public FileData() {
+    }
 
-	public void setDestinationDirectory(String destinationDirectory) {
-		this.destinationDirectory = destinationDirectory;
-	}
+    public FileData(Path path) {
+        try {
+            File file = path.toFile();
+            this.sourceDirectory = file.getParent();
+            this.fileName = file.getName();
+            this.fileSize = file.length();
+            this.fileData = Files.readAllBytes(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-	public String getSourceDirectory() {
-		return sourceDirectory;
-	}
+    public String getDestinationDirectory() {
+        return destinationDirectory;
+    }
 
-	public void setSourceDirectory(String sourceDirectory) {
-		this.sourceDirectory = sourceDirectory;
-	}
+    public void setDestinationDirectory(String destinationDirectory) {
+        this.destinationDirectory = destinationDirectory;
+    }
 
-	public String getFileName() {
-		return fileName;
-	}
+    public String getSourceDirectory() {
+        return sourceDirectory;
+    }
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+    public void setSourceDirectory(String sourceDirectory) {
+        this.sourceDirectory = sourceDirectory;
+    }
 
-	public long getFileSize() {
-		return fileSize;
-	}
+    public String getFileName() {
+        return fileName;
+    }
 
-	public void setFileSize(long fileSize) {
-		this.fileSize = fileSize;
-	}
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
-	public byte[] getFileData() {
-		return fileData;
-	}
+    public long getFileSize() {
+        return fileSize;
+    }
 
-	public void setFileData(byte[] fileData) {
-		this.fileData = fileData;
-	}
+    public void setFileSize(long fileSize) {
+        this.fileSize = fileSize;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public byte[] getFileData() {
+        return fileData;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public void setFileData(byte[] fileData) {
+        this.fileData = fileData;
+    }
 
-	@Override
-	public String toString() {
-		return "FileData [destinationDirectory=" + destinationDirectory + ", sourceDirectory=" + sourceDirectory
-				+ ", fileName=" + fileName + ", fileSize=" + fileSize + "]";
-	}
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "FileData [destinationDirectory=" + destinationDirectory + ", sourceDirectory=" + sourceDirectory
+                + ", fileName=" + fileName + ", fileSize=" + fileSize + "]";
+    }
 }
