@@ -9,6 +9,7 @@ import java.net.UnknownHostException;
 import java.nio.file.Path;
 
 import com.wojnarowicz.socket.data.FileData;
+import com.wojnarowicz.socket.data.Response;
 
 public class SocketClient {
 
@@ -40,8 +41,8 @@ public class SocketClient {
             
             // read the server response message
             ois = new ObjectInputStream(socket.getInputStream());
-            String message = (String) ois.readObject();
-            System.out.println("Message: " + message);
+            Response response = (Response) ois.readObject();
+            System.out.println("Message: " + response.getMessage());
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();

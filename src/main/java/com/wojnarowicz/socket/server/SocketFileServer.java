@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import com.wojnarowicz.socket.data.FileData;
+import com.wojnarowicz.socket.data.Response;
 
 
 public class SocketFileServer {
@@ -30,8 +31,11 @@ public class SocketFileServer {
             System.out.println("Message Received: " + fileData.toString());
             saveFile(fileData);
 
+            Response response = new Response();
+            response.setMessage("Data received " + fileData.toString());
+            response.setSuccess(true);
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-            oos.writeObject("Data received " + fileData.toString());
+            oos.writeObject(response);
 
             ois.close();
             oos.close();
