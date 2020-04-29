@@ -22,27 +22,29 @@ public class SocketFileServer {
     public void startServer() throws IOException, ClassNotFoundException {
         server = new ServerSocket(port);
         while(true) {
-            System.out.println("Waiting for the client request");
+        	System.out.println("Waiting for the client request");
 
-            Socket socket = server.accept();
-            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+        	Socket socket = server.accept();
+        	ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 
-            FileData fileData = (FileData) ois.readObject();
-            System.out.println("Message Received: " + fileData.toString());
-            Path savedFile = saveFile(fileData);
+        	FileData fileData = (FileData) ois.readObject();
+        	
+        	if(fileData.getFileSize() > 0) {
+        		System.out.println("Message Received: " + fileData.toString());
+        		Path savedFile = saveFile(fileData);
 
-            Response response = new Response();
-            response.setMessage("Data received " + savedFile.toString());
-            response.setSuccess(true);
-            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-            oos.writeObject(response);
+        		Response response = new Response();
+        		response.setMessage("Data received " + savedFile.toString());
+        		response.setSuccess(true);
+        		ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+        		oos.writeObject(response);
 
-            ois.close();
-            oos.close();
-            socket.close();
-            if(fileData.getFileSize() == -1) {
-                break;
-            }
+        		ois.close();
+        		oos.close();
+        		socket.close();
+        	} else if(fileData.getFileSize() == -1) {
+        		break;
+        	}
         }
         System.out.println("Shutting down Socket server!!");
         server.close();

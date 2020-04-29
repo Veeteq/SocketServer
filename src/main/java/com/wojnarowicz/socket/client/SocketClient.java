@@ -24,7 +24,7 @@ public class SocketClient {
 
     public void sendFile(Path path) {
         FileData fileData = new FileData(path);
-        fileData.setDestinationDirectory("c:\\apps\\");
+        fileData.setDestinationDirectory("/home/public/");
         sendDataPackage(fileData);
     }
 
