@@ -8,7 +8,7 @@ import com.wojnarowicz.socket.data.FileData;
 
 public class SocketClientApplication {
 
-    private static final String MY_DIR = "C:\\Users\\la289dm\\Documents\\Private\\";
+    private static final String MY_DIR = "C:\\Users\\Witek\\Documents\\";
     private static final int MAX_DEPTH = 1;
 
     public static void main(String[] args) {
@@ -18,7 +18,7 @@ public class SocketClientApplication {
             Files.walk(Paths.get(MY_DIR),MAX_DEPTH)
             .filter(Files::isRegularFile)
             .filter(path -> path.toFile().length() < 10000000)
-            .filter(path -> path.toString().endsWith(".pdf"))
+            .filter(path -> path.toString().endsWith(".zip"))
             .forEach(path -> {
                 System.out.println("Sending file: " + path.getFileName());
                 client.sendFile(path);   

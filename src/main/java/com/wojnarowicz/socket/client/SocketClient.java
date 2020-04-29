@@ -19,7 +19,7 @@ public class SocketClient {
     private ObjectInputStream ois;
 
     public SocketClient() throws UnknownHostException, IOException {
-        host = InetAddress.getByName("192.168.10.45");
+        host = InetAddress.getByName("192.168.10.1");
     }
 
     public void sendFile(Path path) {
@@ -57,15 +57,6 @@ public class SocketClient {
             oos.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    public static void main(String[] args)
-            throws UnknownHostException, IOException, ClassNotFoundException, InterruptedException {
-        // get the localhost IP address, if server is running on some other IP, you need
-        // to use that
-        for (int i = 0; i < 5; i++) {
-            Thread.sleep(2000);
         }
     }
 }
