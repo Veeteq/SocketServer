@@ -43,6 +43,11 @@ public class SocketFileServer {
         		oos.close();
         		socket.close();
         	} else if(fileData.getFileSize() == -1) {
+        		Response response = new Response();
+        		response.setMessage("Closing transmission.");
+        		response.setSuccess(true);
+        		ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+        		oos.writeObject(response);
         		break;
         	}
         }
