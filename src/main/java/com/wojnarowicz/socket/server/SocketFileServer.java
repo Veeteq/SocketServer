@@ -29,10 +29,10 @@ public class SocketFileServer {
 
             FileData fileData = (FileData) ois.readObject();
             System.out.println("Message Received: " + fileData.toString());
-            saveFile(fileData);
+            Path savedFile = saveFile(fileData);
 
             Response response = new Response();
-            response.setMessage("Data received " + fileData.toString());
+            response.setMessage("Data received " + savedFile.toString());
             response.setSuccess(true);
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
             oos.writeObject(response);
@@ -48,9 +48,9 @@ public class SocketFileServer {
         server.close();
     }
 
-    private void saveFile(FileData fileData) {
+    private Path saveFile(FileData fileData) {
         if(fileData.getFileSize() <= 0) {
-            return;
+            return null;
         }
 
         if (!new File(fileData.getDestinationDirectory()).exists()) {
@@ -59,12 +59,14 @@ public class SocketFileServer {
         
         String outputFile = fileData.getDestinationDirectory() + fileData.getFileName();
         
+        Path savedPath = null;
         try {
             Path path = Paths.get(outputFile);
-            Files.write(path, fileData.getFileData());
+            savedPath = Files.write(path, fileData.getFileData());
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return savedPath;
     }
     
     public static void main(String[] args) {
