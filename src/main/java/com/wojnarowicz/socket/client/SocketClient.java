@@ -26,6 +26,7 @@ public class SocketClient {
         FileData fileData = new FileData(path);
         fileData.setDestinationDirectory("/home/public/");
         sendDataPackage(fileData);
+        readResponse();
     }
 
     public void sendDataPackage(FileData fileData) {
@@ -38,15 +39,20 @@ public class SocketClient {
             oos = new ObjectOutputStream(socket.getOutputStream());
             oos.writeObject(fileData);
             oos.flush();
-            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void readResponse() {
+    	try {
             // read the server response message
             ois = new ObjectInputStream(socket.getInputStream());
             Response response = (Response) ois.readObject();
             System.out.println("Message: " + response.getMessage());
-
-        } catch (IOException | ClassNotFoundException e) {
+    	} catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
-        }
+        }        
     }
 
     public void close() {

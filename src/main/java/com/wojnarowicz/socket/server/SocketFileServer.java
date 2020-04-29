@@ -48,6 +48,7 @@ public class SocketFileServer {
         		response.setSuccess(true);
         		ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
         		oos.writeObject(response);
+        		
         		break;
         	}
         }
